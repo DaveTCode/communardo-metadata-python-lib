@@ -1,0 +1,21 @@
+language: python
+sudo: false
+python:
+  - '3.5'
+  - '3.6'
+install:
+  - python setup.py install
+  - pip install pycodestyle
+script:
+  - pycodestyle --first comala
+  - python setup.py test --addopts '--cov communardo tests'
+deploy:
+  provider: pypi
+  distributions: sdist bdist_wheel
+  user: davetcode
+  password:
+    secure: kQB/NLT2NDBKcj+AO0qZa1v1bAKWXVB0bNIMUnoHXJh5aZmTLkzyTiQ2t6QXfijtG6NpXOD9QkYkOJx9J4+84CFXYe4iERbtn8ZzDWjUNJV+aTVRPmpR2yEjKXCPQ617S8DfM3DWpV6KRc6dUBGH/Hpmp9FF4Cq2LT8YFKgDnLC2JEas7dokg+dE2vscA/+l4fU1YG8lpwbkEsCEp0ZOAfwUd7imhHCMDwM959mx2gwp4xkXzOB68TWVA7ZD/87FToxtblhRZFdhglZBw+JezxvgUg+MJMitjof/HNI9ywM2mzpQF0v6vPFvQlDZie4XotdT5xnvNC4UsQBGATcDIfc/tZ4IBIfz+l9Q4zNxU5BXvQkeuhbQYouIQEvQ2RGybhLy/Klg4Acdn0AU3c8TgPmIYBMWfWNAPIOflUCXgVWQXrYF4EvenVJhf+f0Qs6lRqdSmnG5L8YgPKz2WYEFIIG5ADY/gvvaRq6xHTjJRVvtlDXsZFYxXgl9ZL/4ewmTS08+fYiwQVYABldOXkpD2pdh7PyVrYGDLAiubqIlVKgTDeDrSDifUlVMY6VCVkFH28im9ZceaW3zb3DPKR8/M2SdHphjI28cHt5iwHJqdhXqbubuoMDpPnhBNY0qite75Ri4lfiAKSjq7M92YxWW+sZPO5RlVjK7UklVhBogm2M=
+  on:
+    tags: true
+    repo: DaveTCode/communardo-metadata-python-lib
+    condition: "$TRAVIS_TAG =~ ^[0-9]+[.][0-9]+[.][0-9]+(rc[0-9]+|[.]dev[0-9]+)?$"
