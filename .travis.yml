@@ -7,7 +7,7 @@ install:
   - python setup.py install
   - pip install pycodestyle
 script:
-  - pycodestyle --first comala
+  - pycodestyle --first communardo
   - python setup.py test --addopts '--cov communardo tests'
 deploy:
   provider: pypi
