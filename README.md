@@ -7,7 +7,7 @@ for Confluence provides.
 
 ## Installation
 
-Install from pypi using
+Install from pypi use:
 ~~~~
 pip install comala-workflows
 ~~~~
@@ -16,8 +16,8 @@ pip install comala-workflows
 
 ```python
 from communardo.metadata.client import MetadataClient
-client = MetadataClient("https://server:port/contextpath", ("user", "pass"))
-metadata_results = client.search(cql="ID=1")
+with MetadataClient("https://server:port/contextpath", ("user", "pass")) as client:
+    metadata_results = client.search(cql="ID=1")
 ```
 
 ## Development and Deployment
