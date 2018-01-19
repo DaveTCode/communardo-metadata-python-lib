@@ -17,3 +17,6 @@ class PageMetadata:
         self.page_url = page_url
         self.page_content_type = page_content_type
         self.page_metadata = page_metadata
+
+    def __str__(self):
+        return f'{self.page_id} | {self.page_title}'

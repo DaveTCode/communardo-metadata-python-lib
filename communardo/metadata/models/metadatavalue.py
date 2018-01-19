@@ -13,3 +13,6 @@ class MetadataValue:
         self.key = key
         self.title = title
         self.content = content
+
+    def __str__(self):
+        return f'{self.metadata_id} | {self.key} | {self.title} | {self.content[:10]}'

@@ -1,13 +1,13 @@
 language: python
 sudo: false
 python:
-  - '3.5'
   - '3.6'
 install:
   - python setup.py install
-  - pip install pycodestyle
+  - pip install pycodestyle mypy pypandoc
 script:
   - pycodestyle --first communardo
+  - mypy communardo
   - python setup.py test --addopts '--cov communardo tests'
 deploy:
   provider: pypi

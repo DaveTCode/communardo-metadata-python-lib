@@ -33,6 +33,15 @@ class MetadataClient:
         self._url = url
         self._basic_auth = basic_auth
         self._base_api_url = f'{self._url}/rest/communardo/metadata/latest/filter'
+        self._client: requests.Session = None
+
+    def __enter__(self):
+        self._client = requests.session()
+        self._client.auth = self._basic_auth
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self._client:
+            self._client.close()
 
     def search(self, query: Optional[str] = None, cql: Optional[str] = None, sort: str = 'content-name-untokenized',
                sort_direction: SearchSortDirection = SearchSortDirection.ASCENDING,
@@ -76,12 +85,21 @@ class MetadataClient:
         last_page = False
         while not last_page:
             url = f'{self._base_api_url}/{page_number}'
-            results = requests.get(url, params=params, auth=self._basic_auth).json()
+
+            if self._client:
+                results = self._client.get(url, params=params).json()
+            else:
+                results = requests.get(url, params=params, auth=self._basic_auth).json()
+
             if 'searchResults' in results:
                 for result in results['searchResults']:
                     yield PageMetadata(result['pageId'], result['pageTitle'], result['pageUrl'], result['contentType'],
-                                       [MetadataValue(v['id'], v['key'], v['title'], v['content']) for v in result['values']])
+                                       [MetadataValue(v['id'], v['key'], v['title'], v['content'])
+                                        for v in result['values']])
 
             # Check if we should stop iterating
             if 'pager' not in results or results['pager']['currentPage'] == results['pager']['pageCount']:
                 last_page = True
+
+    def __str__(self):
+        return self._base_api_url
