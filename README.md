@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/DaveTCode/communardo-metadata-python-lib.svg?branch=master)](https://travis-ci.org/DaveTCode/communardo-metadata-python-lib)
+[![PyPI version](https://badge.fury.io/py/communardo-metadata.svg)](https://badge.fury.io/py/communardo-metadata)
 
 # Communardo Metadata Python Library
 
@@ -9,7 +10,7 @@ for Confluence provides.
 
 Install from pypi use:
 ~~~~
-pip install comala-workflows
+pip install communardo-metadata
 ~~~~
 
 ## Usage
