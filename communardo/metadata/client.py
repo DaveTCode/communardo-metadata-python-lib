@@ -23,7 +23,8 @@ class MetadataClient:
     """
     default_page_size = 10
 
-    def __init__(self, url: str, basic_auth: Tuple[str, str]) -> None:
+    def __init__(self, url, basic_auth):
+        # type: (str, Tuple[str, str]) -> None
         """
         :param url: The base URL on which you access the confluence instance
         in a web browser.
@@ -32,8 +33,8 @@ class MetadataClient:
         """
         self._url = url
         self._basic_auth = basic_auth
-        self._base_api_url = f'{self._url}/rest/communardo/metadata/latest/filter'
-        self._client: requests.Session = None
+        self._base_api_url = '{}/rest/communardo/metadata/latest/filter'.format(self._url)
+        self._client = None  # type: requests.Session
 
     def __enter__(self):
         self._client = requests.session()
@@ -43,9 +44,9 @@ class MetadataClient:
         if self._client:
             self._client.close()
 
-    def search(self, query: Optional[str] = None, cql: Optional[str] = None, sort: str = 'content-name-untokenized',
-               sort_direction: SearchSortDirection = SearchSortDirection.ASCENDING,
-               fields: Optional[str] = None) -> Iterable[PageMetadata]:
+    def search(self, query=None, cql=None, sort='content-name-untokenized',
+               sort_direction=SearchSortDirection.ASCENDING, fields=None):
+        # type: (Optional[str], Optional[str], str, SearchSortDirection, Optional[str]) -> Iterable[PageMetadata]
         """
         The Communardo Metadata plugin exposes a single REST API entry point
         which acts as a way to filter all documents on the confluence instance
@@ -84,7 +85,7 @@ class MetadataClient:
         page_number = 1
         last_page = False
         while not last_page:
-            url = f'{self._base_api_url}/{page_number}'
+            url = '{}/{}'.format(self._base_api_url, page_number)
 
             if self._client:
                 results = self._client.get(url, params=params).json()

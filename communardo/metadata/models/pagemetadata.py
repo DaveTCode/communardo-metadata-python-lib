@@ -10,8 +10,8 @@ class PageMetadata:
     """
     Represents the set of communardo metadata about a page.
     """
-    def __init__(self, page_id: int, page_title: str, page_url: str, page_content_type: str,
-                 page_metadata: List[MetadataValue]) -> None:
+    def __init__(self, page_id, page_title, page_url, page_content_type, page_metadata):
+        # type: (int, str, str, str, List[MetadataValue]) -> None
         self.page_id = page_id
         self.page_title = page_title
         self.page_url = page_url
@@ -19,4 +19,4 @@ class PageMetadata:
         self.page_metadata = page_metadata
 
     def __str__(self):
-        return f'{self.page_id} | {self.page_title}'
+        return '{} | {}'.format(self.page_id, self.page_title)
